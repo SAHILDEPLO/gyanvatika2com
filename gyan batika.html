@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gyan Vatika Shiksha Sadan - Result Checker</title>
+  <style>
+    body {
+      background: #1c1c1c;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ffcc00;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: #dddddd;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 220px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      margin: 10px 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #ff9900;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    table {
+      margin: 30px auto;
+      border-collapse: collapse;
+      width: 90%;
+      display: none;
+    }
+
+    th, td {
+      border: 1px solid #fff;
+      padding: 10px;
+    }
+
+    .pass {
+      color: #00ff99;
+    }
+
+    .fail {
+      color: #ff4444;
+    }
+
+    .not-found {
+      color: #ff4444;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gyan Vatika Shiksha Sadan</h1>
+  <h2>Student Result Checker</h2>
+
+  <input type="text" id="rollInput" placeholder="Enter Roll No. (01 - 50)">
+  <br>
+  <button onclick="checkResult()">Check Result</button>
+
+  <div id="resultBox">
+    <table id="resultTable">
+      <thead>
+        <tr>
+          <th>Roll No.</th>
+          <th>Student Name</th>
+          <th>Marks</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="resultBody"></tbody>
+    </table>
+
+    <div class="not-found" id="notFound" style="display:none;">❌ Roll number not found.</div>
+  </div>
+
+  <script>
+    const students = [
+      "Aayush Sharma", "Sita Karki", "Roshan Yadav", "Anisha Bhandari", "Manoj Thapa",
+      "Sahil Ansari", "Rita Chaudhary", "Bikash Singh", "Kajal Pandey", "Anil Das",
+      "Pratiksha Giri", "Ramesh Shah", "Puja Thapa", "Binod Khadka", "Sneha Rai",
+      "Kiran Neupane", "Rohit Yadav", "Aarati Basnet", "Suman Shah", "Sarita Yogi",
+      "Deepak Lama", "Bhawana Kumari", "Anuj Thapa", "Nikita Singh", "Ravi Tamang",
+      "Salina Khadka", "Pawan Das", "Asmita Poudel", "Niraj Gupta", "Laxmi Adhikari",
+      "Kabita Sah", "Ramesh Yadav", "Anita Sharma", "Rajiv Giri", "Jyoti Mahato",
+      "Dipendra Lama", "Sunita Yadav", "Nabin Chaudhary", "Samiksha Pathak", "Bikram BK",
+      "Sabina Singh", "Sudip Thapa", "Meena Bista", "Prakash Chaudhary", "Sabin Karki",
+      "Gita Shrestha", "Umesh Mandal", "Rabina Lama", "Rajesh Sah", "Suman Chaudhary"
+    ];
+
+    const marks = Array.from({ length: 50 }, () => Math.floor(Math.random() * 81) + 10); // random marks 10–90
+
+    function checkResult() {
+      const rollInput = document.getElementById("rollInput").value.trim();
+      const roll = rollInput.padStart(2, '0');
+      const index = parseInt(roll) - 1;
+
+      const resultBox = document.getElementById("resultBox");
+      const resultBody = document.getElementById("resultBody");
+      const notFound = document.getElementById("notFound");
+      const resultTable = document.getElementById("resultTable");
+
+      // Reset
+      resultBody.innerHTML = "";
+      resultTable.style.display = "none";
+      notFound.style.display = "none";
+
+      if (index >= 0 && index < students.length) {
+        const name = students[index];
+        const mark = marks[index];
+        const status = mark > 40 ? "Pass ✅" : "Fail ❌";
+        const statusClass = mark > 40 ? "pass" : "fail";
+
+        resultBody.innerHTML = `
+          <tr>
+            <td>${roll}</td>
+            <td>${name}</td>
+            <td>${mark}</td>
+            <td class="${statusClass}">${status}</td>
+          </tr>
+        `;
+
+        resultTable.style.display = "table";
+      } else {
+        notFound.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>
